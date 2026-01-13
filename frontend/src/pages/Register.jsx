@@ -7,7 +7,7 @@ export default function SignUp() {
   const [user, setUser] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate();
 
-  const BASE_URL = "http://localhost:5000/api/auth";
+  const BASE_URL = "https://gigflow-g43e.onrender.com/api/auth";
 
   const handleInput = (e) =>
     setUser({ ...user, [e.target.name]: e.target.value });
