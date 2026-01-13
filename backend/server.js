@@ -4,11 +4,26 @@ const app = express();
 const connectDb = require("./src/utils/db");
 const cors = require("cors");
 
+const allowedOrigins = [
+  "https://gig-flow-rouge-nine.vercel.app",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-  origin: ["https://gig-flow-rouge-nine.vercel.app"],
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: "GET,POST,PUT,PATCH,DELETE",
+  allowedHeaders: "Content-Type,Authorization"
 }));
+
+// Handle preflight requests
+app.options("*", cors());
 
 app.use(express.json());
 
