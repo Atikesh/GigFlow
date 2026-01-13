@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  title: GigFlow API Documentation
+  version: 1.0.0
+  description: API documentation for the GigFlow Assignment
+
+servers:
+  - url: http://localhost:5000/api
+
+paths:
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login success
+        400:
+          description: Invalid credentials
+
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: User registered
+        400:
+          description: Email already exists
+
+
+  /gigs:
+    get:
+      tags: [Gigs]
+      summary: Get all gigs
+      responses:
+        200:
+          description: List of gigs
+
+    post:
+      tags: [Gigs]
+      summary: Create a new gig
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                budget:
+                  type: integer
+      responses:
+        201:
+          description: Gig created
+
+
+  /gigs/{id}:
+    get:
+      tags: [Gigs]
+      summary: Get gig details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Gig details
+
+
+  /bids:
+    post:
+      tags: [Bids]
+      summary: Create a bid for gig
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gigId:
+                  type: string
+                message:
+                  type: string
+                price:
+                  type: integer
+      responses:
+        200:
+          description: Bid created
+
+
+  /bids/{gigId}:
+    get:
+      tags: [Bids]
+      summary: Get bids for a gig
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: gigId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of bids
+
+
+  /bids/{bidId}/hire:
+    patch:
+      tags: [Bids]
+      summary: Hire a freelancer for gig
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: bidId
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Bid hired successfully
+
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
