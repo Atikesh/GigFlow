@@ -5,7 +5,7 @@ const connectDb = require("./src/utils/db");
 const cors = require("cors");
 
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: ["https://gig-flow-rouge-nine.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true
 }));
