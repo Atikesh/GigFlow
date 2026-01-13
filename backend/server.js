@@ -5,7 +5,9 @@ const app = express();
 
 // Manual CORS (Render-safe)
 const allowedOrigins = [
-  "https://gig-flow-rouge-nine.vercel.app",
+  "https://gig-flow-h3fepu8ht-atikeshs-projects.vercel.app",  // NEW domain
+  "https://gig-flow-rouge-nine.vercel.app",                   // OLD domain
+  "https://gig-flow.vercel.app",                              // default domain
   "http://localhost:5173"
 ];
 
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 
   next();
 });
+
 
 app.use(express.json());
 
